@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>INFOM DB APP: Purchase</title>
+        <link rel="stylesheet" href="../style.css">
+    </head>
+    <body>
+        <div class="buttons">
+            <a href="../main.html">Home</a>
+            <a href="../database.html">Database</a>
+            <a href="../transactions.html">Transactions</a>
+            <a href="../reports.html">Reports</a>
+        </div>
+        <p>This is the Processing Returns transaction.</p>
+        <p>It does the ff:
+            Verify the original purchase transaction from the transaction history.<br>
+            Check the customer's eligibility for returns based on the return policy.<br>
+            Record the return transaction, noting the items being returned and reasons for the return.<br>
+            Update the items record to increase the quantity of returned items.<br>
+            Process refunds or adjustments to the customer’s account as needed.<br>
+            User specifies the ff: Sales ID, Customer ID, any additional questions for eligibility, reasons for return<br>
+            Affected/used tables: returns, sales, items
+        </p>
+        <h4>Sales ID:</h4>
+        <input type="text">
+        <br>
+        <h4>Customer ID:</h4>
+        <input type="text">
+        <br>
+        <h4>(Insert eligibility stuff here)</h4>
+        <input type="text">
+        <br>
+        <h4>Reason for Return</h4>
+        <input type="text">
+        <br>
+        <button class="confirm">Confirm?</button>
+    </body>
+</html>

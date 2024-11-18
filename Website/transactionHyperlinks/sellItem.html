@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>INFOM DB APP: Purchase</title>
+        <link rel="stylesheet" href="../style.css">
+    </head>
+    <body>
+        <div class="buttons">
+            <a href="../main.html">Home</a>
+            <a href="../database.html">Database</a>
+            <a href="../transactions.html">Transactions</a>
+            <a href="../reports.html">Reports</a>
+        </div>
+        <p>This is the Selling of Items transaction.</p>
+        <p>It does the ff:
+            Confirm items bought by customers for items to be decremented from inventory.<br>
+            Record the transaction in the customer’s purchase history.<br>
+            Update the items record to reflect the newly removed quantities.<br>
+            Log any additional information (such as new customers or out-of-stock items) for tracking purposes.<br>
+            User specifies the ff: item (from list of items), customer (and any needed additional details), selling price per item, quantity <br>
+            Affected tables: items, sales, customer
+        </p>
+
+        <h4>Item:</h4>
+        <select>
+            <option value="item1">Item1</option>
+            <option value="item1">Item2</option>
+            <option value="item1">Item3</option>
+            <option value="item1">Item4</option>
+        </select>
+        <br>
+        <h4>Customer:</h4>
+        <input type="text">
+        <br>
+        <h4>Selling Price Per Item:</h4>
+        <input type="text">
+        <br>
+        <h4>Quantity:</h4>
+        <input type="text">
+        <br>
+        <button class="confirm">Confirm?</button>
+    </body>
+</html>

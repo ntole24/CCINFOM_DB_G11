@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>INFOM DB APP: Purchase</title>
+        <link rel="stylesheet" href="../style.css">
+    </head>
+    <body>
+        <div class="buttons">
+            <a href="../main.html">Home</a>
+            <a href="../database.html">Database</a>
+            <a href="../transactions.html">Transactions</a>
+            <a href="../reports.html">Reports</a>
+        </div>
+        <p>This is the Purchasing of Items transaction.</p>
+        <p>It does the ff:
+            Create and confirm purchase orders for items needed in inventory.<br>
+            Record the transaction in the supplier’s transaction and staff item history.<br>
+            Update the items record to reflect the newly received quantities.<br>
+            Log any related expenses and delivery dates for tracking purposes.<br>
+            User specifies the ff: item (from list of items), staff, price per item, quantity<br>
+            Tables that get affected/used: items, purchases, suppliers<br>
+        </p>
+
+        <h4>Item:</h4>
+        <select>
+            <option value="item1">Item1</option>
+            <option value="item1">Item2</option>
+            <option value="item1">Item3</option>
+            <option value="item1">Item4</option>
+        </select>
+        <br>
+        <h4>Staff:</h4>
+        <input type="text">
+        <br>
+        <h4>Price Per Item:</h4>
+        <input type="text">
+        <br>
+        <h4>Quantity:</h4>
+        <input type="text">
+        <br>
+        <button class="confirm">Confirm?</button>
+    </body>
+</html>

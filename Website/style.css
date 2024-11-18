@@ -14,6 +14,51 @@
     display: inline-block;
 }
 
-a:hover, a:active {
+.buttons a:hover, a:active {
     background-color: red;
+}
+
+.dropdown {
+    display: inline-block;
+}
+.dropdown button {
+    background-color: hsl(0, 0%, 80%);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+.dropdown .content {
+    display: none;
+    position: absolute;
+    background-color: hsl(0, 0%, 95%);
+    min-width: 100px;
+    box-shadow: 2px 2px 5px hsla(0, 0%, 0%, 0.817);
+}
+.dropdown:hover .content {
+    display: block;
+}
+.dropdown:hover button {
+    background-color: hsl(0, 0%, 70%);
+}
+.dropdown a:hover {
+    background-color: hsl(0, 0%, 90%);
+}
+
+.confirm {
+    font-size: 30px;
+    height:50px;
+    width: auto;
+    margin-top: 20px;
+    background-color:rgb(83, 148, 209)
+}
+.confirm:hover {
+    cursor:pointer;
 }
