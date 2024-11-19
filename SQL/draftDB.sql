@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS `draftDB`;
+USE draftDB;
 
 DROP TABLE IF EXISTS `items`;
 CREATE TABLE `items` (
