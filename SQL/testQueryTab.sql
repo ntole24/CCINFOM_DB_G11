@@ -1,5 +1,7 @@
-SELECT * FROM infom_test_schema.items;
+SELECT * FROM draftDB.items;
 
-SELECT * FROM infom_test_schema.suppliers;
+SELECT * FROM draftDB.suppliers;
 
-SELECT * FROM infom_test_schema.customers;
+SELECT * FROM draftDB.customers;
+
+SELECT * FROM draftDB.staff;
