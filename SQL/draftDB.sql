@@ -1,10 +1,17 @@
 CREATE DATABASE IF NOT EXISTS `draftDB`;
 USE draftDB;
 
+-- Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`draftdb`.`staff`, CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`))
+
 DROP TABLE IF EXISTS `draftDB`.`supplier_item_cost`;
+DROP TABLE IF EXISTS `draftDB`.`customers`;
+
+
+DROP TABLE IF EXISTS `draftDB`.`staff`;
+
 DROP TABLE IF EXISTS `draftDB`.`suppliers`;
 DROP TABLE IF EXISTS `draftDB`.`items`;
-DROP TABLE IF EXISTS `draftDB`.`customers`;
+DROP TABLE IF EXISTS `draftDB`.`jobs`;
 
 CREATE TABLE `draftDB`.`items` (
   `item_id` varchar(5) NOT NULL,
@@ -47,6 +54,24 @@ CREATE TABLE `draftDB`.`customers` (
   FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `draftDB`.`jobs` (
+  `job_id` varchar(5) NOT NULL,
+  `job_title` varchar(45) NOT NULL,
+  `salary` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`job_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `draftDB`.`staff` (
+  `staff_id` varchar(5) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `date_employed` date NOT NULL,
+  `date_released` date DEFAULT NULL,
+  `job_id` varchar(5) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  PRIMARY KEY (`staff_id`),
+  FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I100', 'VitA-Pills', 'Vitamin A, 500 mg Tablets', '125', '1000');
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I101', 'VitB-Pills', 'Vitamin B, 500 mg Tablets', '150', '1200');
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I102', 'VitC-Pills', 'Vitamin C, 500 mg Tablets', '175', '1200');
@@ -70,3 +95,20 @@ INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purcha
 INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C102', 'I104', '25', '2021-12-01', 'Samuel Cruz Bautista', '+63-917-321-1239', 'samBautista088@gmail.com', 'Naga');
 INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C103', 'I100', '60', '2019-05-11', 'Enrico Morales Fernandez', '+63-926-095-3950', 'emf2302@gmail.com', 'Vigan');
 INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C104', 'I103', '10', '2020-08-29', 'Jonas Lopez Martinez', '+63-956-493-5911', 'jomartinez@gmail.com', 'Dasmariñas');
+
+INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J100', 'Pharmacist', '25000');
+INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J101', 'Inventory Manager', '28000');
+INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J102', 'Security Guard', '22000');
+INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J103', 'Store Manager', '50000');
+INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J104', 'Pharmacy Assistant', '23000');
+-- INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST107', 'Nathaniel Tolentino', '2024-10-10', 'J105', 'Employed')
+-- Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`draftdb`.`staff`, CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`))
+
+INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST100', 'Emma de la Cruz', '2022-06-01', 'J100', 'Employed');
+INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST101', 'Liam Nelson', '2023-11-04', 'J100', 'On Leave');
+INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `date_released`, `job_id`, `status`) VALUES ('ST102', 'Ava Basco', '2019-11-07', '2021-04-07', 'J101', 'Fired');
+INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST103', 'Noah David', '2020-08-03', 'J101', 'Employed');
+INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST104', 'David Liwanag', '2020-11-11', 'J101', 'Employed');
+INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST105', 'Gary Ermita', '2022-09-07', 'J102', 'Employed');
+INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST106', 'Olivia de Guzman', '2021-02-04', 'J103', 'Employed');
+INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST107', 'Nathaniel Tolentino', '2024-10-10', 'J104', 'Employed');
