@@ -52,8 +52,8 @@ CREATE TABLE `draftDB`.`purchases` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `draftDB`.`supplier_item_cost` (
-  `supplier_id` varchar(4) NOT NULL,
   `item_id` varchar(4) NOT NULL,
+  `supplier_id` varchar(4) NOT NULL,
   `unit_cost` decimal(10,2) NOT NULL,
   PRIMARY KEY (`supplier_id`,`item_id`),
   FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
@@ -92,7 +92,7 @@ CREATE TABLE `draftDB`.`staff` (
 CREATE TABLE `draftDB`.`payment_details` (
   `payment_id` varchar(5) NOT NULL,
   `payment_date` date NOT NULL,
-  `bonus/penalty` varchar(45) NOT NULL,
+  `bonus_penalty` varchar(45) NOT NULL,
   `percentage` decimal(10,2) NOT NULL,
   PRIMARY KEY (`payment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -135,11 +135,11 @@ INSERT INTO `draftDB`.`supplier_item_cost` (`item_id`, `supplier_id`, `unit_cost
 INSERT INTO `draftDB`.`supplier_item_cost` (`item_id`, `supplier_id`, `unit_cost`) VALUES ('I103', 'S101', '80.00');
 INSERT INTO `draftDB`.`supplier_item_cost` (`item_id`, `supplier_id`, `unit_cost`) VALUES ('I104', 'S101', '180.00');
 
-INSERT INTO `draftDB`.`customers` (`customer_id`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C100', '2019-09-11', 'Carlos Gomez Villanueva', '+63-922-4848', 'carlosVill@gmail.com', 'Davao');
-INSERT INTO `draftDB`.`customers` (`customer_id`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C101', '2019-02-13', 'Liam Santos Rodrigue', '+63-924-39351', 'liamSR129@gmail.com', 'Pasay');
-INSERT INTO `draftDB`.`customers` (`customer_id`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C102', '2021-12-01', 'Samuel Cruz Bautista', '+63-917-321-1239', 'samBautista088@gmail.com', 'Naga');
-INSERT INTO `draftDB`.`customers` (`customer_id`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C103', '2019-05-11', 'Enrico Morales Fernandez', '+63-926-095-3950', 'emf2302@gmail.com', 'Vigan');
-INSERT INTO `draftDB`.`customers` (`customer_id`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C104', '2020-08-29', 'Jonas Lopez Martinez', '+63-956-493-5911', 'jomartinez@gmail.com', 'Dasmariñas');
+INSERT INTO `draftDB`.`customers` (`customer_id`, `name`, `contact_number`, `email`, `city`) VALUES ('C100', 'Carlos Gomez Villanueva', '+63-922-4848', 'carlosVill@gmail.com', 'Davao');
+INSERT INTO `draftDB`.`customers` (`customer_id`, `name`, `contact_number`, `email`, `city`) VALUES ('C101', 'Liam Santos Rodrigue', '+63-924-39351', 'liamSR129@gmail.com', 'Pasay');
+INSERT INTO `draftDB`.`customers` (`customer_id`, `name`, `contact_number`, `email`, `city`) VALUES ('C102', 'Samuel Cruz Bautista', '+63-917-321-1239', 'samBautista088@gmail.com', 'Naga');
+INSERT INTO `draftDB`.`customers` (`customer_id`, `name`, `contact_number`, `email`, `city`) VALUES ('C103', 'Enrico Morales Fernandez', '+63-926-095-3950', 'emf2302@gmail.com', 'Vigan');
+INSERT INTO `draftDB`.`customers` (`customer_id`, `name`, `contact_number`, `email`, `city`) VALUES ('C104', 'Jonas Lopez Martinez', '+63-956-493-5911', 'jomartinez@gmail.com', 'Dasmariñas');
 
 INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU100', 'I101', '2023-06-20', '70', '2026-01-13');
 INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU101', 'I100', '2023-06-20', '70', '2026-01-13');
@@ -174,8 +174,8 @@ INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, 
 INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA105', 'C102', 'I101', '6', '2024-03-12');
 INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA106', 'C104', 'I100', '30', '2024-03-12');
 
-INSERT INTO `draftDB`.`payment_details` (`payment_id`, `payment_date`, `bonus/penalty`, `percentage`) VALUES ('PM100', '2023-06-04', 'None', '0');
-INSERT INTO `draftDB`.`payment_details` (`payment_id`, `payment_date`, `bonus/penalty`, `percentage`) VALUES ('PM101', '2023-12-04', 'Bonus', '0.05');
+INSERT INTO `draftDB`.`payment_details` (`payment_id`, `payment_date`, `bonus_penalty`, `percentage`) VALUES ('PM100', '2023-06-04', 'None', '0');
+INSERT INTO `draftDB`.`payment_details` (`payment_id`, `payment_date`, `bonus_penalty`, `percentage`) VALUES ('PM101', '2023-12-04', 'Bonus', '0.05');
 
 INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA100', 'ST100', 'PM100');
 INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA101', 'ST102', 'PM100');
