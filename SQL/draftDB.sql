@@ -1,8 +1,6 @@
 CREATE DATABASE IF NOT EXISTS `draftDB`;
 USE draftDB;
 
--- Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`draftdb`.`staff`, CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`))
-
 DROP TABLE IF EXISTS `draftDB`.`supplier_item_cost`;
 DROP TABLE IF EXISTS `draftDB`.`customers`;
 
@@ -72,6 +70,16 @@ CREATE TABLE `draftDB`.`staff` (
   FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `draftDB`.`purchases` (
+  `purchase_id` varchar(5) NOT NULL,
+  `item_id` varchar(5) NOT NULL,
+  `purchase_date` date NOT NULL,
+  `quantity` int NOT NULL,
+  `expiration_date` date DEFAULT NULL,
+  PRIMARY KEY (`purchase_id`),
+  FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I100', 'VitA-Pills', 'Vitamin A, 500 mg Tablets', '125', '1000');
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I101', 'VitB-Pills', 'Vitamin B, 500 mg Tablets', '150', '1200');
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I102', 'VitC-Pills', 'Vitamin C, 500 mg Tablets', '175', '1200');
@@ -101,8 +109,6 @@ INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J101', '
 INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J102', 'Security Guard', '22000');
 INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J103', 'Store Manager', '50000');
 INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J104', 'Pharmacy Assistant', '23000');
--- INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST107', 'Nathaniel Tolentino', '2024-10-10', 'J105', 'Employed')
--- Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`draftdb`.`staff`, CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`))
 
 INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST100', 'Emma de la Cruz', '2022-06-01', 'J100', 'Employed');
 INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST101', 'Liam Nelson', '2023-11-04', 'J100', 'On Leave');
@@ -112,3 +118,13 @@ INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `s
 INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST105', 'Gary Ermita', '2022-09-07', 'J102', 'Employed');
 INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST106', 'Olivia de Guzman', '2021-02-04', 'J103', 'Employed');
 INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST107', 'Nathaniel Tolentino', '2024-10-10', 'J104', 'Employed');
+
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU100', 'I101', '2023-06-20', '70', '2026-01-13');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU101', 'I100', '2023-06-20', '70', '2026-01-13');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU102', 'I104', '2023-06-20', '30', '2026-01-13');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU103', 'I104', '2024-02-11', '50', '2026-01-25');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU104', 'I103', '2024-02-11', '100', '2026-01-25');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU105', 'I100', '2024-02-11', '100', '2026-01-25');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU106', 'I102', '2024-02-15', '100', '2026-01-20');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU107', 'I103', '2024-02-15', '60', '2026-01-20');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU108', 'I104', '2024-02-23', '60', '2026-01-20');

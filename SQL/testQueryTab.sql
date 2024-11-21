@@ -30,4 +30,6 @@ SELECT * FROM items;
 SELECT * FROM suppliers;
 SELECT * FROM supplier_item_cost;
 SELECT * FROM customers;
+SELECT * FROM staff;
+SELECT * FROM jobs;
 
