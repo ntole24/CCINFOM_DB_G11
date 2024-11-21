@@ -34,7 +34,6 @@ CREATE TABLE `draftDB`.`suppliers` (
 
 CREATE TABLE `draftDB`.`customers` (
   `customer_id` varchar(5) NOT NULL,
-  `purchase_date` date NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `contact_number` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
