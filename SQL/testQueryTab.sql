@@ -32,4 +32,6 @@ SELECT * FROM supplier_item_cost;
 SELECT * FROM customers;
 SELECT * FROM staff;
 SELECT * FROM jobs;
+SELECT * FROM purchases;
+SELECT * FROM sales;
 

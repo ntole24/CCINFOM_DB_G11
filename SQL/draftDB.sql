@@ -2,8 +2,9 @@ CREATE DATABASE IF NOT EXISTS `draftDB`;
 USE draftDB;
 
 DROP TABLE IF EXISTS `draftDB`.`supplier_item_cost`;
+DROP TABLE IF EXISTS `draftDB`.`sales`;
 DROP TABLE IF EXISTS `draftDB`.`customers`;
-
+DROP TABLE IF EXISTS `draftDB`.`purchases`;
 
 DROP TABLE IF EXISTS `draftDB`.`staff`;
 
@@ -52,6 +53,16 @@ CREATE TABLE `draftDB`.`customers` (
   FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `draftDB`.`purchases` (
+  `purchase_id` varchar(5) NOT NULL,
+  `item_id` varchar(5) NOT NULL,
+  `purchase_date` date NOT NULL,
+  `quantity` int NOT NULL,
+  `expiration_date` date DEFAULT NULL,
+  PRIMARY KEY (`purchase_id`),
+  FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `draftDB`.`jobs` (
   `job_id` varchar(5) NOT NULL,
   `job_title` varchar(45) NOT NULL,
@@ -70,13 +81,14 @@ CREATE TABLE `draftDB`.`staff` (
   FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `draftDB`.`purchases` (
-  `purchase_id` varchar(5) NOT NULL,
+CREATE TABLE `draftDB`.`sales` (
+  `sales_id` varchar(5) NOT NULL,
+  `customer_id` varchar(5) NOT NULL,
   `item_id` varchar(5) NOT NULL,
-  `purchase_date` date NOT NULL,
   `quantity` int NOT NULL,
-  `expiration_date` date DEFAULT NULL,
-  PRIMARY KEY (`purchase_id`),
+  `sale_date` date NOT NULL,
+  PRIMARY KEY (`sales_id`),
+  FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
   FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -104,6 +116,16 @@ INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purcha
 INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C103', 'I100', '60', '2019-05-11', 'Enrico Morales Fernandez', '+63-926-095-3950', 'emf2302@gmail.com', 'Vigan');
 INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C104', 'I103', '10', '2020-08-29', 'Jonas Lopez Martinez', '+63-956-493-5911', 'jomartinez@gmail.com', 'Dasmariñas');
 
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU100', 'I101', '2023-06-20', '70', '2026-01-13');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU101', 'I100', '2023-06-20', '70', '2026-01-13');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU102', 'I104', '2023-06-20', '30', '2026-01-13');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU103', 'I104', '2024-02-11', '50', '2026-01-25');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU104', 'I103', '2024-02-11', '100', '2026-01-25');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU105', 'I100', '2024-02-11', '100', '2026-01-25');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU106', 'I102', '2024-02-15', '100', '2026-01-20');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU107', 'I103', '2024-02-15', '60', '2026-01-20');
+INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU108', 'I104', '2024-02-23', '60', '2026-01-20');
+
 INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J100', 'Pharmacist', '25000');
 INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J101', 'Inventory Manager', '28000');
 INSERT INTO `draftDB`.`jobs` (`job_id`, `job_title`, `salary`) VALUES ('J102', 'Security Guard', '22000');
@@ -119,12 +141,11 @@ INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `s
 INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST106', 'Olivia de Guzman', '2021-02-04', 'J103', 'Employed');
 INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST107', 'Nathaniel Tolentino', '2024-10-10', 'J104', 'Employed');
 
-INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU100', 'I101', '2023-06-20', '70', '2026-01-13');
-INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU101', 'I100', '2023-06-20', '70', '2026-01-13');
-INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU102', 'I104', '2023-06-20', '30', '2026-01-13');
-INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU103', 'I104', '2024-02-11', '50', '2026-01-25');
-INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU104', 'I103', '2024-02-11', '100', '2026-01-25');
-INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU105', 'I100', '2024-02-11', '100', '2026-01-25');
-INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU106', 'I102', '2024-02-15', '100', '2026-01-20');
-INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU107', 'I103', '2024-02-15', '60', '2026-01-20');
-INSERT INTO `draftDB`.`purchases` (`purchase_id`, `item_id`, `purchase_date`, `quantity`, `expiration_date`) VALUES ('PU108', 'I104', '2024-02-23', '60', '2026-01-20');
+INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA100', 'C103', 'I100', '10', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA101', 'C101', 'I102', '8', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA102', 'C100', 'I104', '12', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA103', 'C104', 'I103', '3', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA104', 'C102', 'I100', '34', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA105', 'C102', 'I101', '6', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA106', 'C104', 'I100', '30', '2024-03-12');
+-- Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`draftdb`.`sales`, CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`))
