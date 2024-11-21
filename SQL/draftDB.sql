@@ -4,6 +4,7 @@ USE draftDB;
 DROP TABLE IF EXISTS `draftDB`.`supplier_item_cost`;
 DROP TABLE IF EXISTS `draftDB`.`suppliers`;
 DROP TABLE IF EXISTS `draftDB`.`items`;
+DROP TABLE IF EXISTS `draftDB`.`customers`;
 
 CREATE TABLE `draftDB`.`items` (
   `item_id` varchar(5) NOT NULL,
@@ -33,6 +34,19 @@ CREATE TABLE `draftDB`.`supplier_item_cost` (
   FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `draftDB`.`customers` (
+  `customer_id` varchar(5) NOT NULL,
+  `item_id` varchar(5) NOT NULL,
+  `quantity` int NOT NULL,
+  `purchase_date` date NOT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `contact_number` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `city` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`customer_id`),
+  FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I100', 'VitA-Pills', 'Vitamin A, 500 mg Tablets', '125', '1000');
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I101', 'VitB-Pills', 'Vitamin B, 500 mg Tablets', '150', '1200');
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I102', 'VitC-Pills', 'Vitamin C, 500 mg Tablets', '175', '1200');
@@ -50,3 +64,9 @@ INSERT INTO `draftDB`.`supplier_item_cost` (`item_id`, `supplier_id`, `unit_cost
 INSERT INTO `draftDB`.`supplier_item_cost` (`item_id`, `supplier_id`, `unit_cost`) VALUES ('I102', 'S100', '1100.00');
 INSERT INTO `draftDB`.`supplier_item_cost` (`item_id`, `supplier_id`, `unit_cost`) VALUES ('I103', 'S101', '80.00');
 INSERT INTO `draftDB`.`supplier_item_cost` (`item_id`, `supplier_id`, `unit_cost`) VALUES ('I104', 'S101', '180.00');
+
+INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C100', 'I102', '20', '2019-09-11', 'Carlos Gomez Villanueva', '+63-922-4848', 'carlosVill@gmail.com', 'Davao');
+INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C101', 'I104', '20', '2019-02-13', 'Liam Santos Rodrigue', '+63-924-39351', 'liamSR129@gmail.com', 'Pasay');
+INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C102', 'I104', '25', '2021-12-01', 'Samuel Cruz Bautista', '+63-917-321-1239', 'samBautista088@gmail.com', 'Naga');
+INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C103', 'I100', '60', '2019-05-11', 'Enrico Morales Fernandez', '+63-926-095-3950', 'emf2302@gmail.com', 'Vigan');
+INSERT INTO `draftDB`.`customers` (`customer_id`, `item_id`, `quantity`, `purchase_date`, `name`, `contact_number`, `email`, `city`) VALUES ('C104', 'I103', '10', '2020-08-29', 'Jonas Lopez Martinez', '+63-956-493-5911', 'jomartinez@gmail.com', 'Dasmariñas');
