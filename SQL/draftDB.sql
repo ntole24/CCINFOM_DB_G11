@@ -1,16 +1,17 @@
 CREATE DATABASE IF NOT EXISTS `draftDB`;
 USE draftDB;
 
-DROP TABLE IF EXISTS `draftDB`.`supplier_item_cost`;
-DROP TABLE IF EXISTS `draftDB`.`sales`;
-DROP TABLE IF EXISTS `draftDB`.`customers`;
-DROP TABLE IF EXISTS `draftDB`.`purchases`;
-
+DROP TABLE IF EXISTS `draftDB`.`returns`;
+DROP TABLE IF EXISTS `draftDB`.`payrolls`;
+DROP TABLE IF EXISTS `draftDB`.`payment_details`;
 DROP TABLE IF EXISTS `draftDB`.`staff`;
-
+DROP TABLE IF EXISTS `draftDB`.`jobs`;
+DROP TABLE IF EXISTS `draftDB`.`sales`;
+DROP TABLE IF EXISTS `draftDB`.`supplier_item_cost`;
+DROP TABLE IF EXISTS `draftDB`.`purchases`;
+DROP TABLE IF EXISTS `draftDB`.`customers`;
 DROP TABLE IF EXISTS `draftDB`.`suppliers`;
 DROP TABLE IF EXISTS `draftDB`.`items`;
-DROP TABLE IF EXISTS `draftDB`.`jobs`;
 
 CREATE TABLE `draftDB`.`items` (
   `item_id` varchar(5) NOT NULL,
@@ -29,15 +30,6 @@ CREATE TABLE `draftDB`.`suppliers` (
   `email` varchar(45) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`supplier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `draftDB`.`supplier_item_cost` (
-  `supplier_id` varchar(4) NOT NULL,
-  `item_id` varchar(4) NOT NULL,
-  `unit_cost` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`supplier_id`,`item_id`),
-  FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
-  FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `draftDB`.`customers` (
@@ -63,6 +55,26 @@ CREATE TABLE `draftDB`.`purchases` (
   FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `draftDB`.`supplier_item_cost` (
+  `supplier_id` varchar(4) NOT NULL,
+  `item_id` varchar(4) NOT NULL,
+  `unit_cost` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`supplier_id`,`item_id`),
+  FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
+  FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `draftDB`.`sales` (
+  `sale_id` varchar(5) NOT NULL,
+  `customer_id` varchar(5) NOT NULL,
+  `item_id` varchar(5) NOT NULL,
+  `quantity` int NOT NULL,
+  `sale_date` date NOT NULL,
+  PRIMARY KEY (`sale_id`),
+  FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
+  FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `draftDB`.`jobs` (
   `job_id` varchar(5) NOT NULL,
   `job_title` varchar(45) NOT NULL,
@@ -81,15 +93,32 @@ CREATE TABLE `draftDB`.`staff` (
   FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `draftDB`.`sales` (
-  `sales_id` varchar(5) NOT NULL,
-  `customer_id` varchar(5) NOT NULL,
-  `item_id` varchar(5) NOT NULL,
-  `quantity` int NOT NULL,
-  `sale_date` date NOT NULL,
-  PRIMARY KEY (`sales_id`),
-  FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
-  FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`)
+CREATE TABLE `draftDB`.`payment_details` (
+  `payment_id` varchar(5) NOT NULL,
+  `payment_date` date NOT NULL,
+  `bonus/penalty` varchar(45) NOT NULL,
+  `percentage` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `draftDB`.`payrolls` (
+  `payroll_id` varchar(5) NOT NULL,
+  `staff_id` varchar(5) NOT NULL,
+  `payment_id` varchar(5) NOT NULL,
+  PRIMARY KEY (`payroll_id`),
+  FOREIGN KEY (`staff_id`) REFERENCES `staff` (`staff_id`),
+  FOREIGN KEY (`payment_id`) REFERENCES `payment_details` (`payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `draftDB`.`returns` (
+  `return_id` varchar(5) NOT NULL,
+  `pharmacist_id` varchar(5) NOT NULL,
+  `sale_id` varchar(5) NOT NULL,
+  `return_reason` varchar(45) DEFAULT NULL,
+  `return_date` varchar(45) NOT NULL,
+  PRIMARY KEY (`return_id`),
+  FOREIGN KEY (`pharmacist_id`) REFERENCES `staff` (`staff_id`),
+  FOREIGN KEY (`sale_id`) REFERENCES `sales` (`sale_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I100', 'VitA-Pills', 'Vitamin A, 500 mg Tablets', '125', '1000');
@@ -99,10 +128,10 @@ INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `se
 INSERT INTO `draftDB`.`items` (`item_id`, `name`, `description`, `quantity`, `selling_price`) VALUES ('I104', 'Almond Milk', 'Unsweetened, 1000 mL, Carton', '25', '300');
 
 INSERT INTO `draftDB`.`suppliers` (`supplier_id`, `assigned_staff_id`, `name`, `contact_number`, `email`, `city`) VALUES ('S100', 'ST104', 'Health Store Corp.', '+63-931-136-7892', 'orders@healthstore.com', 'Manila');
-INSERT INTO `draftDB`.`suppliers` (`supplier_id`, `assigned_staff_id`, `name`, `contact_number`, `email`, `city`) VALUES ('S101', 'ST103', 'PrimeSource Inc.', '+63-937-492 8493', 'sales@primesource.inc', 'San Pablo');
+INSERT INTO `draftDB`.`suppliers` (`supplier_id`, `assigned_staff_id`, `name`, `contact_number`, `email`, `city`) VALUES ('S101', 'ST103', 'PrimeSource Inc.', '+63-937-492 8493', 'sale@primesource.inc', 'San Pablo');
 INSERT INTO `draftDB`.`suppliers` (`supplier_id`, `assigned_staff_id`, `name`, `contact_number`, `email`, `city`) VALUES ('S102', 'ST102', 'MediSupplyPro', '+63-932-834-4389', 'ordersOffice@MediSupply.com', 'Mandaluyong');
-INSERT INTO `draftDB`.`suppliers` (`supplier_id`, `assigned_staff_id`, `name`, `contact_number`, `email`, `city`) VALUES ('S103', 'ST103', 'LifeLine Med Distributors', ' +63-917-586-0450', 'salesDept@LifeLineMD.com', 'Muntinlupa');
-INSERT INTO `draftDB`.`suppliers` (`supplier_id`, `assigned_staff_id`, `name`, `contact_number`, `email`, `city`) VALUES ('S104', 'ST102', 'Allied Pharma Solutions', '+63-926-903-3944', 'salesOffice@AlliedPharma.com', 'Muntinlupa');
+INSERT INTO `draftDB`.`suppliers` (`supplier_id`, `assigned_staff_id`, `name`, `contact_number`, `email`, `city`) VALUES ('S103', 'ST103', 'LifeLine Med Distributors', ' +63-917-586-0450', 'saleDept@LifeLineMD.com', 'Muntinlupa');
+INSERT INTO `draftDB`.`suppliers` (`supplier_id`, `assigned_staff_id`, `name`, `contact_number`, `email`, `city`) VALUES ('S104', 'ST102', 'Allied Pharma Solutions', '+63-926-903-3944', 'saleOffice@AlliedPharma.com', 'Muntinlupa');
 
 INSERT INTO `draftDB`.`supplier_item_cost` (`item_id`, `supplier_id`, `unit_cost`) VALUES ('I100', 'S100', '800.00');
 INSERT INTO `draftDB`.`supplier_item_cost` (`item_id`, `supplier_id`, `unit_cost`) VALUES ('I101', 'S100', '1100.00');
@@ -141,11 +170,33 @@ INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `s
 INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST106', 'Olivia de Guzman', '2021-02-04', 'J103', 'Employed');
 INSERT INTO `draftDB`.`staff` (`staff_id`, `name`, `date_employed`, `job_id`, `status`) VALUES ('ST107', 'Nathaniel Tolentino', '2024-10-10', 'J104', 'Employed');
 
-INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA100', 'C103', 'I100', '10', '2024-03-12');
-INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA101', 'C101', 'I102', '8', '2024-03-12');
-INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA102', 'C100', 'I104', '12', '2024-03-12');
-INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA103', 'C104', 'I103', '3', '2024-03-12');
-INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA104', 'C102', 'I100', '34', '2024-03-12');
-INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA105', 'C102', 'I101', '6', '2024-03-12');
-INSERT INTO `draftDB`.`sales` (`sales_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA106', 'C104', 'I100', '30', '2024-03-12');
--- Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`draftdb`.`sales`, CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`))
+INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA100', 'C103', 'I100', '10', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA101', 'C101', 'I102', '8', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA102', 'C100', 'I104', '12', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA103', 'C104', 'I103', '3', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA104', 'C102', 'I100', '34', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA105', 'C102', 'I101', '6', '2024-03-12');
+INSERT INTO `draftDB`.`sales` (`sale_id`, `customer_id`, `item_id`, `quantity`, `sale_date`) VALUES ('SA106', 'C104', 'I100', '30', '2024-03-12');
+
+INSERT INTO `draftDB`.`payment_details` (`payment_id`, `payment_date`, `bonus/penalty`, `percentage`) VALUES ('PM100', '2023-06-04', 'None', '0');
+INSERT INTO `draftDB`.`payment_details` (`payment_id`, `payment_date`, `bonus/penalty`, `percentage`) VALUES ('PM101', '2023-12-04', 'Bonus', '0.05');
+
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA100', 'ST100', 'PM100');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA101', 'ST102', 'PM100');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA102', 'ST103', 'PM100');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA103', 'ST104', 'PM100');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA104', 'ST105', 'PM100');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA105', 'ST106', 'PM100');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA106', 'ST100', 'PM100');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA107', 'ST101', 'PM101');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA108', 'ST102', 'PM101');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA109', 'ST103', 'PM101');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA110', 'ST104', 'PM101');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA111', 'ST105', 'PM101');
+INSERT INTO `draftDB`.`payrolls` (`payroll_id`, `staff_id`, `payment_id`) VALUES ('PA112', 'ST106', 'PM101');
+
+INSERT INTO `draftDB`.`returns` (`return_id`, `pharmacist_id`, `sale_id`, `return_reason`, `return_date`) VALUES ('R100', 'ST101', 'SA100', 'Wrong product', '2024-03-13');
+INSERT INTO `draftDB`.`returns` (`return_id`, `pharmacist_id`, `sale_id`, `return_reason`, `return_date`) VALUES ('R101', 'ST100', 'SA103', 'Juice canister is broken', '2024-03-13');
+INSERT INTO `draftDB`.`returns` (`return_id`, `pharmacist_id`, `sale_id`, `return_reason`, `return_date`) VALUES ('R102', 'ST101', 'SA104', 'Wrong product', '2024-03-13');
+INSERT INTO `draftDB`.`returns` (`return_id`, `pharmacist_id`, `sale_id`, `return_reason`, `return_date`) VALUES ('R103', 'ST101', 'SA102', 'Wrong product', '2024-03-14');
+INSERT INTO `draftDB`.`returns` (`return_id`, `pharmacist_id`, `sale_id`, `return_reason`, `return_date`) VALUES ('R104', 'ST100', 'SA101', 'Wrong product', '2024-03-14');

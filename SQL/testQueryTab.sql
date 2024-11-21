@@ -25,6 +25,28 @@ JOIN
 	customers c ON i.item_id = c.item_id
 ORDER BY
 	i.item_id;
+    
+SELECT
+	s.staff_id,
+    j.job_title
+FROM
+	staff s
+JOIN
+	jobs j ON s.job_id = j.job_id
+WHERE
+	j.job_title = 'Pharmacist';
+    
+-- get item name from returns
+
+SELECT
+	r.return_id,
+    i.name
+FROM 
+	returns r
+JOIN
+	sales sa ON r.sale_id = sa.sale_id
+JOIN
+	items i ON sa.item_id = i.item_id;
 
 SELECT * FROM items;
 SELECT * FROM suppliers;
@@ -34,4 +56,7 @@ SELECT * FROM staff;
 SELECT * FROM jobs;
 SELECT * FROM purchases;
 SELECT * FROM sales;
+SELECT * FROM payrolls;
+SELECT * FROM payment_details;
+SELECT * FROM returns;
 
