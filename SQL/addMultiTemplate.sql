@@ -30,12 +30,7 @@ SELECT
 FROM suppliers;
 
 -- Inserting into supplier_item_cost table
-INSERT INTO supplier_item_cost (item_id, supplier_id, unit_cost)
-SELECT 
-    'I101', 'S101', '500.00'
-FROM supplier_item_cost;
--- Error Code: 1062. Duplicate entry 'I101-S101' for key 'supplier_item_cost.PRIMARY'
-
+INSERT INTO supplier_item_cost (item_id, supplier_id, unit_cost) VALUES ('I101', 'S101', '500.00');
 
 SELECT * FROM supplier_item_cost;
 
