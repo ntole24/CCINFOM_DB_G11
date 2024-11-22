@@ -39,8 +39,8 @@ public class customers{
             System.out.println("Connection Successful");
 
             PreparedStatement pstmt = conn.prepareStatement("SELECT CONCAT('C', LPAD(SUBSTRING(IFNULL(MAX(customer_id), 'C000'), 2) + 1, 3, '0')) AS newID FROM draftDB.customers");
-            System.out.println("Here");
             ResultSet rst = pstmt.executeQuery();
+            clearArrayLists();
             while (rst.next()) {
                 customer_id = rst.getString("newID");
             }

@@ -46,6 +46,7 @@ public class suppliers {
 
             PreparedStatement pstmt = conn.prepareStatement("SELECT CONCAT('S', LPAD(SUBSTRING(IFNULL(MAX(supplier_id), 'S000'), 2) + 1, 3, '0')) AS newID FROM draftDB.suppliers");
             ResultSet rst = pstmt.executeQuery();
+            clearArrayLists();
             while (rst.next()) {
                 supplier_id = rst.getString("newID");
             }
