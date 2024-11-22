@@ -55,7 +55,7 @@ CREATE TABLE `draftDB`.`supplier_item_cost` (
   `item_id` varchar(4) NOT NULL,
   `supplier_id` varchar(4) NOT NULL,
   `unit_cost` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`supplier_id`,`item_id`),
+  PRIMARY KEY (`item_id`,`supplier_id`),
   FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
   FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
