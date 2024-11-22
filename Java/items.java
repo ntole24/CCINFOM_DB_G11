@@ -35,17 +35,11 @@ public class items{
             ResultSet rst = pstmt.executeQuery();
             clearArrayLists();
 
-            while (rst.next()) { // placed the results of our statement into these arraylists
+            while (rst.next()) { // iterate through each row and add the results
                 item_id = rst.getString("item_id");
                 name = rst.getString("name");
-                // description = rst.getString("description");
-                // quantity = rst.getInt("quantity"); // try removing this later
-                // selling_price = rst.getFloat("selling_price");
                 item_idList.add(item_id);
                 nameList.add(name);
-                // descriptionList.add(description);
-                // quantityList.add(quantity);
-                // selling_priceList.add(selling_price);
             }
             pstmt.close();
             conn.close();
@@ -64,6 +58,7 @@ public class items{
             Connection conn = DriverManager.getConnection(url, "root", "DataCampSQL24!");
             System.out.println("Connection Successful");
 
+            // Initialize the prepared statement to use
             PreparedStatement pstmt = conn.prepareStatement("SELECT CONCAT('I', LPAD(SUBSTRING(IFNULL(MAX(item_id), 'I000'), 2) + 1, 3, '0')) AS newID FROM draftDB.items");
             ResultSet rst = pstmt.executeQuery();
             while (rst.next()) {
