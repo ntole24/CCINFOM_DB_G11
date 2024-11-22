@@ -44,7 +44,6 @@ public class purchases {
                 purchase_id = rst.getString("newID");
             }
             pstmt = conn.prepareStatement("INSERT INTO draftDB.purchases (purchase_id, item_id, purchase_date, quantity, expiration_date) VALUE (?, ?, ?, ?, ?)");
-            System.out.println("Here");
             pstmt.setString(1, purchase_id);
             pstmt.setString(2, item_id);
             pstmt.setDate(3, purchase_date);

@@ -89,19 +89,4 @@ public class items{
         }
     }
     // add other function if needed
-    public static void main(String[] args) {
-        items i = new items();
-        i.name = "VitX-Pills";
-        i.description = "Please work!";
-        i.quantity = 12;
-        i.selling_price = 20.5;
-        i.items_overQuantity();
-        for (int a = 0; a < i.item_idList.size(); a++) {
-            System.out.println(i.item_idList.get(a));
-            System.out.println(i.nameList.get(a));
-            //System.out.println(i.descriptionList.get(a));
-            //System.out.println(i.quantityList.get(a));
-            //System.out.println(i.selling_priceList.get(a));
-        }
-    }
 }
