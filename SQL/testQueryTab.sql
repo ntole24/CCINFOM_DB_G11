@@ -50,13 +50,13 @@ JOIN
 
 SELECT * FROM items;
 SELECT * FROM suppliers;
-SELECT * FROM supplier_item_cost;
 SELECT * FROM customers;
-SELECT * FROM staff;
-SELECT * FROM jobs;
 SELECT * FROM purchases;
+SELECT * FROM supplier_item_cost;
 SELECT * FROM sales;
-SELECT * FROM payrolls;
+SELECT * FROM jobs;
+SELECT * FROM staff;
 SELECT * FROM payment_details;
+SELECT * FROM payrolls;
 SELECT * FROM returns;
 

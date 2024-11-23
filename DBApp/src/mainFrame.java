@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class startFrame {
+public class mainFrame {
     private Controller controller; 
 
     private JFrame frame;
@@ -33,22 +33,41 @@ public class startFrame {
     private int chosenDatabaseIndex;
     private boolean hasDBBeenPicked = false;
     private JButton confirmDatabase;
-    JLabel fieldLabels[] = new JLabel[6];
-    JTextField textFields[] = new JTextField[6];
+    JLabel dInputLabels[] = new JLabel[6];
+    JTextField dTextFields[] = new JTextField[6];
     private JButton confirmDBInputs;
     
-
     private JFrame tFrame;
     private JPanel tPanel;
+    private final String[] transactionNames = {"Purchasing of Items", "Selling of Items", "Payroll Distribution", "Processing Returns"};
+    private final Integer[] transactionInputsNeeded = {4, 4, 3, 3};
+    private final String[][] transactionInputsLabels = {{"Item", "Staff", "Price/Item", "Quantity"},{"Item","Customer","Selling Price/Item","Quantity"},{"Payday Date","Bonus/Deduction? (place None if neither)","Percentage"},{"Sale_ID","Customer_ID","Reason for Return"}};
+    private JComboBox<String> transactionList;
+    private int chosenTransactionIndex;
+    private boolean hasTBeenPicked = false;
+    private JButton confirmTransaction;
+    JLabel tInputLabels[] = new JLabel[4];
+    JTextField tTextFields[] = new JTextField[4];
+    private JButton confirmTInputs;
 
     private JFrame rFrame;
     private JPanel rPanel;
+    private final String[] reportNames = {"Item Sales Report", "Inventory Movement Report", "Supplier Purchase Report", "Customer Purchase Report"};
+    private final Integer[] reportInputsNeeded = {2, 2, 1, 1};
+    private final String[][] reportInputsLabels = {{"Year", "Month"},{"Year","Month"},{"Supplier"},{"Customer","Customer_ID"}};
+    private JComboBox<String> reportList;
+    private int chosenReportIndex;
+    private boolean hasRBeenPicked = false;
+    private JButton confirmReport;
+    JLabel rInputLabels[] = new JLabel[2];
+    JTextField rTextFields[] = new JTextField[2];
+    private JButton confirmRInputs;
 
     private final String[] buttonLabels = {"Edit Database", "Make Transaction", "Generate Reports"};
 
     private JFrame currentFrame;
 
-    public startFrame() {
+    public mainFrame() {
         initialize();
     }
 
@@ -61,9 +80,20 @@ public class startFrame {
         
         panel = new JPanel(new GridLayout(3,0));
 
-        dButton = createButton(0);
-        tButton = createButton(1);
-        rButton = createButton(2);
+        dButton = createStartButton(0);
+        tButton = createStartButton(1);
+        rButton = createStartButton(2);
+
+        confirmDatabase = new JButton("Confirm_Database");
+        confirmDBInputs = new JButton("Add");
+
+        confirmTransaction = new JButton("Confirm_Transaction");
+        confirmTInputs = new JButton("Make");
+
+        confirmReport = new JButton("Confirm_Report");
+        confirmRInputs = new JButton("Generate");
+
+
 
         panel.add(dButton);
         panel.add(tButton);
@@ -83,14 +113,12 @@ public class startFrame {
         dPanel = new JPanel(new GridLayout(3,0));
         //----//
         JPanel comboBoxAndButton = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        this.databaseList = new JComboBox<String>(databaseNames);
-        this.confirmDatabase = new JButton("Confirm");
-        this.confirmDBInputs = new JButton("Add");
+        this.databaseList = new JComboBox<>(databaseNames);
         
         comboBoxAndButton.add(databaseList);
         comboBoxAndButton.add(confirmDatabase);
         dPanel.add(comboBoxAndButton);
-        controller = new Controller(this);
+        // Set action Listeners
         //----//
         
         
@@ -101,16 +129,16 @@ public class startFrame {
         for (int i = 0; i < 6; i++) {
             if (hasDBBeenPicked) {
                 if (i < columnsPerDatabase[chosenDatabaseIndex].length) 
-                    fieldLabels[i] = new JLabel(columnsPerDatabase[chosenDatabaseIndex][i]);
+                    dInputLabels[i] = new JLabel(columnsPerDatabase[chosenDatabaseIndex][i]);
                 else 
-                    fieldLabels[i] = new JLabel("N/A, please leave empty");
+                    dInputLabels[i] = new JLabel("N/A, please leave empty");
             }
             else {
-                fieldLabels[i] = new JLabel("Please pick a database first.");
+                dInputLabels[i] = new JLabel("Please pick a database first.");
             }
-            textFields[i] = new JTextField(10);
-            inputFields.add(fieldLabels[i]);
-            inputFields.add(textFields[i]);
+            dTextFields[i] = new JTextField(10);
+            inputFields.add(dInputLabels[i]);
+            inputFields.add(dTextFields[i]);
         }
         dPanel.add(inputFields);
 
@@ -131,7 +159,33 @@ public class startFrame {
         
         tPanel = new JPanel(new GridLayout(3,0));
 
-        tPanel.add(new JLabel("Transactions"));
+        JPanel comboBoxAndButton = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.transactionList = new JComboBox<String>(transactionNames);
+
+        comboBoxAndButton.add(transactionList);
+        comboBoxAndButton.add(confirmTransaction);
+        tPanel.add(comboBoxAndButton);
+        //----//
+        
+        
+
+        //----//
+        JPanel inputFields = new JPanel(new GridLayout(4, 2));
+
+        for (int i = 0; i < 4; i++) {
+            if (hasTBeenPicked) {
+                tInputLabels[i] = new JLabel(transactionInputsLabels[chosenTransactionIndex][i]);
+            }
+            else
+                tInputLabels[i] = new JLabel("Please pick a transaction first.");
+            
+            tTextFields[i] = new JTextField(20);
+            inputFields.add(tInputLabels[i]);
+            inputFields.add(tTextFields[i]);
+        }
+        tPanel.add(inputFields);
+
+        tPanel.add(confirmTInputs);
 
         tFrame.add(tPanel);
 
@@ -148,14 +202,37 @@ public class startFrame {
         
         rPanel = new JPanel(new GridLayout(3,0));
 
-        rPanel.add(new JLabel("Reports"));
+        JPanel comboBoxAndButton = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        this.reportList = new JComboBox<String>(reportNames);
+        this.confirmReport = new JButton("Confirm_Report");
+        this.confirmRInputs = new JButton("Generate");
+
+        comboBoxAndButton.add(reportList);
+        comboBoxAndButton.add(confirmReport);
+        rPanel.add(comboBoxAndButton);
+        //----//
+        
+        
+
+        //----//
+        JPanel inputFields = new JPanel(new GridLayout(4, 2));
+
+        for (int i = 0; i < 2; i++) {
+            rInputLabels[i] = new JLabel("Please pick a report first.");
+            rTextFields[i] = new JTextField(20);
+            inputFields.add(rInputLabels[i]);
+            inputFields.add(rTextFields[i]);
+        }
+        rPanel.add(inputFields);
+
+        rPanel.add(confirmRInputs);
 
         rFrame.add(rPanel);
 
         rFrame.setVisible(true);
     }
 
-    private JButton createButton(int index) {
+    private JButton createStartButton(int index) {
         JButton button = new JButton(buttonLabels[index]);
         button.setFocusable(false);
         button.setFont(new Font("Arial", Font.PLAIN, 30)); // 30 pixels
@@ -197,25 +274,70 @@ public class startFrame {
         for (int i = 0; i < 6; i++) {
             if (hasDBBeenPicked) {
                 if (i < columnsPerDatabase[chosenDatabaseIndex].length) 
-                    fieldLabels[i].setText(columnsPerDatabase[chosenDatabaseIndex][i]);
+                    dInputLabels[i].setText(columnsPerDatabase[chosenDatabaseIndex][i]);
                 else 
-                    fieldLabels[i].setText("N/A, please leave empty");   
+                    dInputLabels[i].setText("N/A, please leave empty");   
             }
+        }
+    }
+
+    public void updateTransactionJLabels(int chosenTransactionIndex) {
+        for (int i = 0; i < 4; i++) {
+            if (i < transactionInputsLabels[chosenTransactionIndex].length)
+                tInputLabels[i].setText(transactionInputsLabels[chosenTransactionIndex][i]);
+            else
+                tInputLabels[i].setText("N/A, please leave empty");
+        }
+    }
+
+    public void updateReportJLabels(int chosenReportIndex) {
+        for (int i = 0; i < 2; i++) {
+            if (i < reportInputsLabels[chosenReportIndex].length)
+                rInputLabels[i].setText(reportInputsLabels[chosenReportIndex][i]);
+            else
+                rInputLabels[i].setText("N/A, please leave empty");
         }
     }
 
     public void setActionListener(ActionListener al) {
         this.confirmDatabase.addActionListener(al);
         this.confirmDBInputs.addActionListener(al);
+        this.confirmTransaction.addActionListener(al);
+        this.confirmTInputs.addActionListener(al);
+        this.confirmReport.addActionListener(al);
+        this.confirmRInputs.addActionListener(al);
     }
 
-    public int getSelectedIndex() {
-        return this.databaseList.getSelectedIndex();
+    public int getSelectedIndex(int frame) {
+        switch (frame) {
+            case 0:
+                return this.databaseList.getSelectedIndex();
+            case 1:
+                return this.transactionList.getSelectedIndex();
+            case 2:
+                return this.reportList.getSelectedIndex();
+        }
+
+        return -1;
     }
 
-    public String getInputtedTableValue(int index) {
-        String buffer = textFields[index].getText();
-        textFields[index].setText("");
+    public String getInputtedTableValue(int index, int frame) {
+        String buffer = "";
+
+        switch (frame) {
+            case 0:
+                buffer = (dTextFields[index].getText().isEmpty()) ? "" : dTextFields[index].getText();
+                dTextFields[index].setText("");
+                break;
+            case 1:
+                buffer = (tTextFields[index].getText().isEmpty()) ? "" : tTextFields[index].getText();
+                tTextFields[index].setText("");
+                break;
+            case 2:
+                buffer = (rTextFields[index].getText().isEmpty()) ? "" : rTextFields[index].getText();
+                rTextFields[index].setText("");
+                break;
+        }
 
         return buffer;
     }

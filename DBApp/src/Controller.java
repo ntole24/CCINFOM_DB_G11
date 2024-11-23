@@ -8,9 +8,9 @@ import javax.swing.event.DocumentListener;
 public class Controller implements ActionListener, DocumentListener {
     private mainFrame sf;
     
-    public Controller(mainFrame sf, int frame) {
+    public Controller(mainFrame sf) {
         this.sf = sf;
-        sf.setActionListener(this, frame);
+        sf.setActionListener(this);
     }
 
     @Override
@@ -27,6 +27,7 @@ public class Controller implements ActionListener, DocumentListener {
                 String inputsAdd[] = new String[6];
                 for (int i = 0; i < 6; i++) {
                     inputsAdd[i] = sf.getInputtedTableValue(i, 0);
+                    System.out.println(inputsAdd[i]);
                 }
 
                 // Validate them 
@@ -52,6 +53,7 @@ public class Controller implements ActionListener, DocumentListener {
                 String inputsMake[] = new String[4];
                 for (int i = 0; i < 4; i++) {
                     inputsMake[i] = sf.getInputtedTableValue(i, 1);
+                    System.out.println(inputsMake[i]);
                 }
 
                 // Validate them 
@@ -77,6 +79,7 @@ public class Controller implements ActionListener, DocumentListener {
                 String inputsGenerate[] = new String[2];
                 for (int i = 0; i < 2; i++) {
                     inputsGenerate[i] = sf.getInputtedTableValue(i, 2);
+                    System.out.println(inputsGenerate[i]);
                 }
 
                 // Validate them 

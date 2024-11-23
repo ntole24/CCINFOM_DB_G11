@@ -44,6 +44,14 @@ SELECT
     'New York'
 FROM customers;
 
+-- Inserting another row into jobs table
+INSERT INTO jobs (job_id, job_title, salary)
+SELECT 
+    CONCAT('J', LPAD(SUBSTRING(IFNULL(MAX(job_id), 'J000'), 2) + 1, 3, '0')),
+    'Pharmacist',
+    '15000'
+FROM jobs;
+
 -- Inserting into staff table
 INSERT INTO staff (staff_id, name, date_employed, job_id, status)
 SELECT 
@@ -81,6 +89,14 @@ SELECT
     'ST100', 
     'PM100'
 FROM payrolls;
+
+INSERT INTO payment_details (payment_id, payment_date, bonus_penalty, percentage)
+SELECT 
+    CONCAT('PM', LPAD(SUBSTRING(IFNULL(MAX(payment_id), 'PM000'), 3) + 1, 3, '0')), 
+    '2024-10-31', 
+    'Penalty',
+    '0.05'
+FROM payment_details;
 
 -- Inserting into returns table
 INSERT INTO returns (return_id, pharmacist_id, sale_id, return_reason, return_date)
