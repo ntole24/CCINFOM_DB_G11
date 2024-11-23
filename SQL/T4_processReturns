@@ -1,0 +1,26 @@
+-- user input: sale_id, customer_id, return date, return reason
+
+-- if sales id exists
+SELECT		sale_id
+FROM		sales
+WHERE		sale_id = 'SA100' AND customer_id = 'C103' -- both user inputs
+LIMIT		1;
+
+-- check if the customer id is present in sales, 
+select *
+from sales
+where customer_id = 'C103' LIMIT 1;
+
+-- if it does
+SET @next_idR = (
+    SELECT CONCAT('R', LPAD(SUBSTRING(MAX(return_id), 2) + 1, 3, '0'))
+    FROM returns
+);
+
+-- insert into returns table
+INSERT INTO	returns (return_id, pharmacist_id, sale_id, return_reason, return_date) 
+VALUES (@next_idR, 'ST101', 'SA100', 'Wrong Product', '2024-03-13'); -- user inputs
+
+-- update item quantity
+UPDATE		items
+SET			quantity = quantity + (SELECT quantity FROM sales WHERE sale_id = 'SA100'); -- user input

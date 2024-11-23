@@ -4,7 +4,7 @@
 -- 		get supplier id
 select supplier_id
 from suppliers 
-where email = 'saleDept@LifeLineMD.com' -- supplier email user input
+where name = 'saleDept@LifeLineMD.com' -- supplier email user input
 limit 1;
 
 -- if item exists: get id
