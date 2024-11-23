@@ -1,0 +1,7 @@
+Important things to note about this DB app:
+- You have to run the SQL locally first then run the java codes. I'm not sure if that's right
+or if we're supposed ot use the sql accounts in the DLSU laptops (check 40:00 in sir oli's masterclass)
+- You also need to change the user and password in every java file (surely there's a way around this)
+
+Other timestamps:
+45:00 for more on jsp
