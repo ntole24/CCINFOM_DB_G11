@@ -13,8 +13,6 @@ public class Launcher {
         payrolls pa = new payrolls();
         returns r = new returns();
         payment_details pm = new payment_details();
-        pm.setValExceptPayID(Date.valueOf("2024-10-31"), "Bonus", 0.05);
-        pm.addPaymentDetails();
         supplier_item_cost sic = new supplier_item_cost();
         
         EventQueue.invokeLater(new Runnable() {
@@ -22,7 +20,8 @@ public class Launcher {
             // Needed since a subclass (public void run()) needs to define a behavior in a diff. way than the superclass
             public void run() {
                 mainFrame sf = new mainFrame();
-                Controller controller = new Controller(sf);
+                Model model = new Model();
+                Controller controller = new Controller(sf, model);
                 sf.show();
             }
         });

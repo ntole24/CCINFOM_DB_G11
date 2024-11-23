@@ -37,6 +37,38 @@ public class suppliers {
         this.city = city;
     }
 
+    public String getIDFromName(String supplierName) {
+        try{
+            // connection to database sql and other things
+            String url = "jdbc:mysql://localhost/sys";
+            Class.forName ("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(url, "root", "DataCampSQL24!");
+            System.out.println("Connection Successful");
+
+            String queryBuffer = "SELECT s.supplier_id FROM draftDB.suppliers s WHERE s.name = '";
+            queryBuffer += supplierName;
+            queryBuffer += "' LIMIT 1;";
+
+            PreparedStatement pstmt = conn.prepareStatement(queryBuffer);
+            ResultSet rst = pstmt.executeQuery();
+            clearArrayLists();
+
+            while (rst.next()) 
+                supplier_id = rst.getString("supplier_id");
+            
+            pstmt.close();
+            conn.close();
+
+            System.out.println("Successful run!");
+
+            return supplier_id;
+            // return 1;
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     public int addSupplier(){
         try{
             String url = "jdbc:mysql://localhost/sys";

@@ -6,11 +6,13 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class Controller implements ActionListener, DocumentListener {
-    private mainFrame sf;
-    
-    public Controller(mainFrame sf) {
-        this.sf = sf;
-        sf.setActionListener(this);
+    private mainFrame design;
+    private Model model;
+
+    public Controller(mainFrame sf, Model model) {
+        this.design = sf;
+        this.design.setActionListener(this);
+        this.model = model;
     }
 
     @Override
@@ -18,15 +20,15 @@ public class Controller implements ActionListener, DocumentListener {
         switch (e.getActionCommand()) {
             case "Confirm_Database": // confirming DB being picked for dFrame
                 // Tell the design from the 3rd person pov that they need to update the JLabels based on the selected index
-                int chosenDatabaseIndex = sf.getSelectedIndex(0);
-                sf.updateDatabaseJLabels(chosenDatabaseIndex);
+                int chosenDatabaseIndex = design.getSelectedIndex(0);
+                design.updateDatabaseJLabels(chosenDatabaseIndex);
                 break;
             case "Add": // adding a tuple to a selected table  
                 boolean validAdd = true;
                 // Get the inputs
                 String inputsAdd[] = new String[6];
                 for (int i = 0; i < 6; i++) {
-                    inputsAdd[i] = sf.getInputtedTableValue(i, 0);
+                    inputsAdd[i] = design.getInputtedTableValue(i, 0);
                     System.out.println(inputsAdd[i]);
                 }
 
@@ -34,66 +36,67 @@ public class Controller implements ActionListener, DocumentListener {
 
                 // If valid, add
                 if (validAdd) {
-                    sf.showPopUp("The values were successfully inputted!", "Info.", JOptionPane.INFORMATION_MESSAGE);
+                    design.showPopUp("The values were successfully inputted!", "Info.", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
-                    sf.showPopUp("The values were unsuccessfully inputted.", "Error.", JOptionPane.ERROR_MESSAGE);
+                    design.showPopUp("The values were unsuccessfully inputted.", "Error.", JOptionPane.ERROR_MESSAGE);
                 }
 
                 // Close the frame regardless of output
-                sf.closeFrame(0);
+                design.closeFrame(0);
                 break;
             case "Confirm_Transaction":
-                int chosenTransactionIndex = sf.getSelectedIndex(1);
-                sf.updateTransactionJLabels(chosenTransactionIndex);
+                int chosenTransactionIndex = design.getSelectedIndex(1);
+                design.updateTransactionJLabels(chosenTransactionIndex);
                 break;
             case "Make": // adding a tuple to a selected table  
                 boolean validMake = true;
                 // Get the inputs
                 String inputsMake[] = new String[4];
                 for (int i = 0; i < 4; i++) {
-                    inputsMake[i] = sf.getInputtedTableValue(i, 1);
+                    inputsMake[i] = design.getInputtedTableValue(i, 1);
                     System.out.println(inputsMake[i]);
                 }
 
                 // Validate them 
 
-                // If valid, add
+                // If valid, make
                 if (validMake) {
-                    sf.showPopUp("The transaction was successfully made!", "Info.", JOptionPane.INFORMATION_MESSAGE);
+                    model.purchaseItems("VitA-Pills", "PrimeSource Inc.", 0, 10);
+                    design.showPopUp("The transaction was successfully made!", "Info.", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
-                    sf.showPopUp("The transaction was unsuccessfully made.", "Error.", JOptionPane.ERROR_MESSAGE);
+                    design.showPopUp("The transaction was unsuccessfully made.", "Error.", JOptionPane.ERROR_MESSAGE);
                 }
 
                 // Close the frame regardless of output
-                sf.closeFrame(1);
+                design.closeFrame(1);
                 break;
             case "Confirm_Report":
-                int chosenReportIndex = sf.getSelectedIndex(2);
-                sf.updateReportJLabels(chosenReportIndex);
+                int chosenReportIndex = design.getSelectedIndex(2);
+                design.updateReportJLabels(chosenReportIndex);
                 break;
             case "Generate": // adding a tuple to a selected table  
                 boolean validGenerate = true;
                 // Get the inputs
                 String inputsGenerate[] = new String[2];
                 for (int i = 0; i < 2; i++) {
-                    inputsGenerate[i] = sf.getInputtedTableValue(i, 2);
+                    inputsGenerate[i] = design.getInputtedTableValue(i, 2);
                     System.out.println(inputsGenerate[i]);
                 }
 
                 // Validate them 
 
-                // If valid, add
+                // If valid, generate
                 if (validGenerate) {
-                    sf.showPopUp("The report was successfully generated!", "Info.", JOptionPane.INFORMATION_MESSAGE);
+                    design.showPopUp("The report was successfully generated!", "Info.", JOptionPane.INFORMATION_MESSAGE);
                 }
                 else {
-                    sf.showPopUp("The reoprt was unsuccessfully generated.", "Error.", JOptionPane.ERROR_MESSAGE);
+                    design.showPopUp("The reoprt was unsuccessfully generated.", "Error.", JOptionPane.ERROR_MESSAGE);
                 }
 
                 // Close the frame regardless of output
-                sf.closeFrame(2);
+                design.closeFrame(2);
                 break;
         }
     }

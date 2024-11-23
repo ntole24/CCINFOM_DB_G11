@@ -23,6 +23,38 @@ public class items{
         selling_priceList.clear();
     }
 
+    public String getIDFromName(String itemName) {
+        try {
+            // connection to database sql and other things
+            String url = "jdbc:mysql://localhost/sys";
+            Class.forName ("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(url, "root", "DataCampSQL24!");
+            System.out.println("Connection Successful");
+
+            String queryBuffer = "SELECT i.item_id FROM draftDB.items i WHERE i.name = '";
+            queryBuffer += itemName;
+            queryBuffer += "' LIMIT 1;";
+
+            PreparedStatement pstmt = conn.prepareStatement(queryBuffer);
+            ResultSet rst = pstmt.executeQuery();
+            clearArrayLists();
+
+            while (rst.next()) 
+                item_id = rst.getString("item_id");
+            
+            pstmt.close();
+            conn.close();
+
+            System.out.println("Successful run!");
+
+            return item_id;
+            // return 1;
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     public void items_overQuantity () {
         try{
             // connection to database sql and other things
